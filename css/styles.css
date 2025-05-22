@@ -1,325 +1,252 @@
+/* Base styles */
+:root {
+    --zen-primary: #5e7f6e;
+    --zen-secondary: #8ba892;
+    --zen-light: #e8ecef;
+    --zen-dark: #2c3e50;
+    --zen-accent: #a8c69f;
+    --zen-text: #2c3e50;
+    --zen-bg: rgba(255, 255, 255, 0.15);
+    --tile-bg: rgba(255, 255, 255, 0.9);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body, html {
-    height: 100%;
+html, body {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    font-family: 'Roboto', sans-serif;
-    overflow: hidden;
-    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    color: var(--zen-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.background-container {
+/* Background image with overlay */
+body::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #563d7c; /* Purple background color */
     background-image: url('../images/zen-bound-tree-light.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: auto;
+    background-attachment: fixed;
+    opacity: 0.7;
+    z-index: -2;
 }
 
-/* Add a wave pattern overlay */
-.background-container::before {
+/* Overlay for better text readability */
+body::after {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        transparent,
-        transparent 15px,
-        rgba(255, 255, 255, 0.05) 15px,
-        rgba(255, 255, 255, 0.05) 20px
-    );
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
     z-index: -1;
-    opacity: 0.3;
 }
 
-.game-section {
-    display: none;
-    text-align: center;
-    background-color: rgba(86, 61, 124, 0.8);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    max-width: 90%;
+.zen-container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.active {
+/* Header Styles */
+.zen-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--zen-bg);
+    backdrop-filter: blur(8px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.zen-header h1 {
+    font-family: 'Zen Kurenaido', sans-serif;
+    color: var(--zen-dark);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.zen-subtitle {
+    font-size: 1.1rem;
+    color: var(--zen-primary);
+    opacity: 0.9;
+}
+
+/* Main Content */
+.zen-main {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1rem 0;
 }
 
-.hidden {
-    display: none;
+/* Puzzle Container */
+.puzzle-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: var(--zen-bg);
+    backdrop-filter: blur(8px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Welcome Screen */
-#welcome-text {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInDown 1.5s ease-out forwards;
-    font-family: 'Pacifico', cursive;
+/* Puzzle Board */
+.puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0.5rem;
+    width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: calc(var(--border-radius) - 4px);
 }
 
-#instructions {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1.5s ease, transform 1.5s ease;
+/* Tiles */
+.tile {
+    background: var(--tile-bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--zen-dark);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    aspect-ratio: 1/1;
 }
 
-#instructions.active {
-    opacity: 1;
+.tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tile:active {
     transform: translateY(0);
 }
 
-#instructions p {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
+.tile.empty {
+    background: transparent;
+    box-shadow: none;
+    cursor: default;
+    border: 2px dashed rgba(92, 127, 109, 0.3);
+}
+
+.tile.empty:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Controls */
+.zen-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
 .zen-button {
-    background-color: #4ecdc4;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    background: var(--zen-primary);
     color: white;
     border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 50px;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    text-transform: lowercase;
+    transition: var(--transition);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .zen-button:hover {
-    background-color: #3dbdb4;
+    background: var(--zen-secondary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .zen-button:active {
     transform: translateY(0);
 }
 
-/* Game Screen */
-#game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-}
-
-.game-title {
-    font-family: 'Pacifico', cursive;
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: white;
-}
-
-.game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.game-btn {
-    background-color: #352259;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-transform: lowercase;
-}
-
-.game-btn:hover {
-    background-color: #261940;
-}
-
-.stats-container {
-    display: flex;
-    gap: 1rem;
-}
-
-.stat-box {
+/* Footer */
+.zen-footer {
     text-align: center;
-}
-
-.stat-label {
-    font-size: 0.7rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    color: var(--zen-dark);
     opacity: 0.8;
-    text-transform: uppercase;
+    font-size: 0.9rem;
 }
 
-.stat-value {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-#puzzle-board {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 8px;
-    width: min(80vw, 400px);
-    height: min(80vw, 400px);
-    margin: 1rem auto;
-}
-
-.tile {
-    background-color: #4ecdc4; /* Teal color matching the inspiration */
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
-}
-
-.tile:hover:not(.empty) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
-}
-
-.tile.movable {
-    background-color: #5adbcf;
-}
-
-.tile.empty {
-    background-color: #3a2867; /* Dark purple for empty tile */
-    box-shadow: none;
-    cursor: default;
-}
-
-.wide-btn {
-    background-color: #352259;
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    width: 100%;
-    margin: 1rem 0;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    text-transform: capitalize;
-    transition: background-color 0.2s ease;
-}
-
-.wide-btn:hover {
-    background-color: #261940;
-}
-
-.controls-hint {
-    margin-top: 1rem;
-    text-align: center;
-    opacity: 0.7;
-}
-
-.arrow {
-    display: inline-block;
-    font-size: 1.2rem;
-    padding: 0.2rem 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-    margin: 0.2rem;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.arrow-row {
-    display: flex;
-    justify-content: center;
-    margin: 0.3rem 0;
-}
-
-.hint-text {
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    opacity: 0.9;
-}
-
-/* Animations */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .game-title {
+/* Responsive Design */
+@media (max-width: 600px) {
+    .zen-header h1 {
         font-size: 2rem;
     }
     
-    #puzzle-board {
-        width: min(90vw, 350px);
-        height: min(90vw, 350px);
+    .zen-subtitle {
+        font-size: 1rem;
+    }
+    
+    .puzzle-container {
+        padding: 1rem;
     }
     
     .tile {
         font-size: 1.5rem;
     }
+    
+    .zen-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
 }
 
-@media (max-width: 480px) {
-    .game-section {
-        padding: 1.5rem;
-    }
-    
-    .game-title {
-        font-size: 1.8rem;
-    }
-    
-    #puzzle-board {
-        width: min(95vw, 300px);
-        height: min(95vw, 300px);
-        gap: 5px;
-    }
-    
-    .tile {
-        font-size: 1.2rem;
-    }
-    
-    .game-header {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-    
-    .stats-container {
-        width: 100%;
-        justify-content: space-around;
-    }
+/* Animation for tiles */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.tile {
+    animation: fadeIn 0.3s ease-out forwards;
 }
