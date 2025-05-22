@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Zen 15 Puzzle</title>
+</head>
+<body>
+    <div class="background-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="game-section active">
+            <h1 id="welcome-text">Welcome to Zen 15 Puzzle</h1>
+            <div id="instructions" class="hidden">
+                <p>Find peace in solving this classic puzzle.</p>
+                <p>Slide the tiles to arrange them in numerical order.</p>
+                <p>Use arrow keys or mouse to move tiles.</p>
+                <button id="enter-game" class="zen-button">Enter Game</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="game-section hidden">
+            <div id="game-container">
+                <h1 class="game-title">15 Puzzle</h1>
+                
+                <div class="game-header">
+                    <button id="new-game-btn" class="game-btn">new game</button>
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <div class="stat-label">TIME</div>
+                            <div id="timer" class="stat-value">0s</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">MOVES</div>
+                            <div id="moves-counter" class="stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="puzzle-board" class="puzzle-board"></div>
+                
+                <button id="pause-btn" class="wide-btn">Pause</button>
+                
+                <div class="controls-hint">
+                    <div class="arrow up-arrow">↑</div>
+                    <div class="arrow-row">
+                        <div class="arrow left-arrow">←</div>
+                        <div class="arrow down-arrow">↓</div>
+                        <div class="arrow right-arrow">→</div>
+                    </div>
+                    <div class="hint-text">Move tiles in grid<br>to order them from <strong>1 to 15</strong>.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+</body>
+</html>
