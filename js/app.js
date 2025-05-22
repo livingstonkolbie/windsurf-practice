@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
     const puzzleBoard = document.getElementById('puzzle-board');
     const shuffleBtn = document.getElementById('shuffle-btn');
-    const resetBtn = document.getElementById('reset-btn');
     
     // Game state
     let boardSize = 4; // 4x4 board
@@ -213,15 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isAnimating) {
                 shuffleBoard();
                 renderBoard();
-            }
-        });
-        
-        // Reset button
-        resetBtn.addEventListener('click', () => {
-            if (!isAnimating) {
-                createBoard();
-                renderBoard();
-                moveCount = 0;
             }
         });
         
