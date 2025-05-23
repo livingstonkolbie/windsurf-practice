@@ -11,6 +11,10 @@
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     --border-radius: 12px;
     --transition: all 0.3s ease;
+    --header-height: 12vh;
+    --footer-height: 5vh;
+    --controls-height: 8vh;
+    --puzzle-margin: 2vh;
 }
 
 * {
@@ -64,37 +68,43 @@ body::after {
 .zen-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1rem;
-    min-height: 100vh;
+    padding: 1rem;
+    height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 /* Header Styles */
 .zen-header {
     text-align: center;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    margin: 0 0 1vh 0;
+    padding: 1vh 0.5rem;
     background: var(--zen-bg);
     backdrop-filter: blur(8px);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
 }
 
 .zen-header h1 {
     font-family: 'Zen Kurenaido', sans-serif;
     color: var(--zen-dark);
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: clamp(1.5rem, 3.5vmin, 2.5rem);
+    margin: 0.5vh 0;
     font-weight: 500;
     letter-spacing: 1px;
+    line-height: 1.2;
 }
 
 .zen-subtitle {
-    font-size: 1.1rem;
+    font-size: clamp(0.8rem, 2vmin, 1.1rem);
     color: var(--zen-primary);
     opacity: 0.9;
+    margin: 0.2vh 0;
 }
 
 /* Main Content */
@@ -104,44 +114,51 @@ body::after {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0;
+    padding: 1vh 0;
+    min-height: 0;
+    overflow: hidden;
 }
 
 /* Puzzle Container */
 .puzzle-container {
     width: 100%;
-    max-width: 500px;
+    max-width: min(500px, 90vmin);
+    max-height: min(500px, 90vmin);
+    aspect-ratio: 1/1;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: min(15px, 1.5vmin);
     background: var(--zen-bg);
     backdrop-filter: blur(8px);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 1;
+    overflow: hidden;
 }
 
 /* Puzzle Board */
 .puzzle-board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 0.5rem;
+    grid-gap: 0.5vmin;
     width: 100%;
-    aspect-ratio: 1/1;
+    height: 100%;
     position: relative;
-    padding: 0.5rem;
+    padding: 0.5vmin;
     background: rgba(255, 255, 255, 0.4);
     border-radius: calc(var(--border-radius) - 4px);
+    box-sizing: border-box;
 }
 
 /* Tiles */
 .tile {
     background: var(--tile-bg);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    font-weight: 400;
+    font-size: clamp(1.2rem, 5vmin, 2rem);
+    font-weight: 500;
     color: var(--zen-dark);
     cursor: pointer;
     transition: var(--transition);
@@ -178,13 +195,15 @@ body::after {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-top: 2rem;
+    margin: 1vh 0 0 0;
+    padding: 1vh 0;
     flex-wrap: wrap;
+    flex-shrink: 0;
 }
 
 .zen-button {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
+    padding: 0.8em 1.8em;
+    font-size: clamp(0.8rem, 2vmin, 1.1rem);
     font-family: 'Zen Maru Gothic', sans-serif;
     background: var(--zen-primary);
     color: white;
@@ -195,6 +214,9 @@ body::after {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    min-height: 0;
+    white-space: nowrap;
+    min-width: 120px;
 }
 
 .zen-button:hover {
@@ -210,34 +232,37 @@ body::after {
 /* Footer */
 .zen-footer {
     text-align: center;
-    margin-top: 2rem;
-    padding: 1rem;
+    margin: 0.5vh 0 0 0;
+    padding: 0.5vh 0;
     color: var(--zen-dark);
     opacity: 0.8;
-    font-size: 0.9rem;
+    font-size: min(2.5vmin, 0.8rem);
+    flex-shrink: 0;
+    line-height: 1.2;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
+@media (max-height: 700px) {
+    .zen-header {
+        padding: 0.5vh 0.5rem;
+    }
+    
     .zen-header h1 {
-        font-size: 2rem;
+        margin: 0.2vh 0;
+        font-size: clamp(1.2rem, 4vmin, 2rem);
     }
     
     .zen-subtitle {
-        font-size: 1rem;
+        display: none;
     }
     
-    .puzzle-container {
-        padding: 1rem;
-    }
-    
-    .tile {
-        font-size: 1.5rem;
+    .zen-footer {
+        display: none;
     }
     
     .zen-button {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.9rem;
+        padding: 0.6em 1.2em;
+        min-width: 100px;
     }
 }
 
